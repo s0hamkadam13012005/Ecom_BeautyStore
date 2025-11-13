@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Announcement from "./components/Announcement.jsx";
+import Product from "./pages/Product.jsx";
 
 // ✅ Layout component — acts as the shared frame for all pages
 function Layout() {
@@ -12,7 +13,8 @@ function Layout() {
     <div>
       <Announcement />
       <Navbar />
-      <Outlet />  {/* 👈 This is where child routes (Home, Cart, Myaccount) appear */}
+      <Outlet />{" "}
+      {/* 👈 This is where child routes (Home, Cart, Myaccount) appear */}
       <Footer />
     </div>
   );
@@ -37,6 +39,10 @@ const App = () => {
         {
           path: "/myaccount",
           element: <Myaccount />,
+        },
+        {
+          path: "/product/:productId",
+          element: <Product />,
         },
       ],
     },
