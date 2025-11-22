@@ -7,7 +7,7 @@ const Product = () => {
     <div className="h-auto flex justify-between p-[30px]">
       {/* LEFT */}
 
-      <div className="flex-1 h-[500px] w-[600px] ">
+      <div className="flex-1 h-[500px] w-[600px]  ">
         <img src="/lotion2.jpg" className="h-[100%] w-[100%] object-cover" />
       </div>
 
