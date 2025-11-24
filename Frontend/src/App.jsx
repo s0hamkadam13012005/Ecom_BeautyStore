@@ -8,6 +8,8 @@ import Announcement from "./components/Announcement.jsx";
 import Product from "./pages/Product.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ProductList from "./pages/ProductList.jsx";
+import Order from "./pages/Order.jsx";
 
 // ✅ Layout component — acts as the shared frame for all pages
 function Layout() {
@@ -51,8 +53,12 @@ const App = () => {
           element: <Myaccount />,
         },
         {
-          path: "/product/:productId",
-          element: <Product />,
+          path: "/products/:searchterm",
+          element: <ProductList />,
+        },
+        {
+          path: "/myorders",
+          element: <Order />,
         },
       ],
     },
