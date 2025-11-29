@@ -1,7 +1,9 @@
-import Products from "../../Frontend/src/components/Product.jsx";
+import Products from "./pages/Products.jsx";
 import User from "./pages/User.jsx";
 import Menu from "./components/Menu.jsx";
 import Home from "./pages/Home.jsx";
+import Orders from "./pages/Orders.jsx";
+import Banners from "./pages/Banners.jsx";
 
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
@@ -22,7 +24,6 @@ function Layout() {
 
 // ✅ Main App component
 const App = () => {
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -39,15 +40,22 @@ const App = () => {
         {
           path: "/users",
           element: <User />,
-        }
-      ]
+        },
+        {
+          path: "/orders",
+          element: <Orders />,
+        },
+        
+        {
+          path: "/banners",
+          element: <Banners />,
+        },
+      ],
     },
   ]);
 
   // Provide the router to the app
-  return (
-     <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 };
 
 export default App;
