@@ -25,11 +25,11 @@ const services = () => {
 
 const promotion = () =>{
   cron.schedule('30 5  * * 5 ',() => {
-    sendPromotionEmail();
+    sendPromotionalEmail();
   })
 }
 
-
+promotion();
 
 // Start services + connect DB
 services();
