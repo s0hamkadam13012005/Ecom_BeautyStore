@@ -1,4 +1,4 @@
-import { LineChart } from "@mui/x-charts";
+import { LineChart } from "@mui/x-charts/LineChart";
 
 const Home = () => {
   return (
@@ -78,9 +78,16 @@ const Home = () => {
         </div>
         <div className="w-full overflow-x-auto">
           <LineChart
-            xAxis={[{ data: [1, 2, 3] }]}
-            series={[{ data: [10, 20, 30] }]}
-            height={300}
+            xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+            series={[
+              {
+                data: [2, 5.5, 2, 8.5, 1.5, 5],
+              },
+            ]}
+            height={250}
+            width={500}
+            margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+            grid={{ vertical: true, horizontal: true }}
           />
         </div>
       </div>

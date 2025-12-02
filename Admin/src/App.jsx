@@ -4,7 +4,8 @@ import Menu from "./components/Menu.jsx";
 import Home from "./pages/Home.jsx";
 import Orders from "./pages/Orders.jsx";
 import Banners from "./pages/Banners.jsx";
-
+import Product from "./pages/Product.jsx";
+import NewProduct from "./pages/NewProduct.jsx";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
 // ✅ Layout component — acts as the shared frame for all pages
@@ -45,10 +46,18 @@ const App = () => {
           path: "/orders",
           element: <Orders />,
         },
-        
+
         {
           path: "/banners",
           element: <Banners />,
+        },
+        {
+          path: "/newproduct",
+          element: <NewProduct />,
+        },
+        {
+          path: "/product/:id",
+          element: <Product />,
         },
       ],
     },
