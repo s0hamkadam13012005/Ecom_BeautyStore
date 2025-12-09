@@ -10,6 +10,6 @@ router.get("/find/:userId",getUser);
 router.get("/",getAllUser);
 
 
-router.delete(":id",deleteUser)
+router.delete("/:id",deleteUser)
 
 export default router;

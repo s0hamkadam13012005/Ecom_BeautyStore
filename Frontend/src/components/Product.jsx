@@ -1,20 +1,24 @@
-import { Rating } from "@smastrom/react-rating";
-import "@smastrom/react-rating/style.css";
+import StarRatings from "react-star-ratings";
 
-const Product = ({ img }) => {
+const Product = ({ img, rating = 3 }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-[500px] m-[20px] bg-cover">
-      <img src={img} className="h-[400px] w-[300px]" />
-      <h2 className="text-[18px] font-semibold text-center w-[300px]">
+    <div className="flex flex-col items-center w-[300px] bg-white rounded-lg shadow-sm p-4">
+      <img
+        src={img}
+        className="h-[400px] w-full object-cover rounded-md mb-4"
+      />
+      <h2 className="text-lg font-semibold text-center mb-2">
         Rosehip Seed Argan Sweet Almond & Vitamin E Oil - Anti-aging
       </h2>
-      <span className="text-[18px] font-semibold flex items-center justify-center">
-        $100
-      </span>
-
-      <div className="flex justify-center items-center mt-2">
-        <Rating value={2.4} readOnly style={{ maxWidth: 120 }} />
-      </div>
+      <span className="text-lg font-semibold mb-2">$100</span>
+      <StarRatings
+        numberOfStars={5}
+         rating={rating.star}
+         isSelectable={true}
+        starRatedColor="yellow"
+        starDimension="30px"
+        starSpacing="2px"
+      />
     </div>
   );
 };

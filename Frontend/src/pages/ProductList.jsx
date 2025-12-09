@@ -1,15 +1,34 @@
-import React from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Products from "../components/Products";
 
 const ProductList = () => {
-  return (
-    <div className="min-h-screen p-8 bg-gray-50">
-      <div className="flex justify-between m-4">
-        {/* LEFT  */}
+  const location = useLocation();
+  const query = location.pathname.split("/")[2];
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState("newest");
+  const handleFilters = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters,
+      [e.target.name]: value,
+    });
+  };
 
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="flex justify-between m-4">
         <div className="flex flex-col sm:flex-row sm:items-center">
-          <span className="text-lg font-semibold mr-4">Filter Products</span>
-          <select name="concern" id="" className="p-2 mb-4 sm:mb-0 sm:mr-4">
+          <span className="text-lg font-semibold mr-4">Filter Products:</span>
+          <select
+            name="concern"
+            className="p-2 mb-4 sm:mb-0 sm:mr-4"
+            onChange={handleFilters}
+            defaultValue=""
+          >
+            <option disabled value="">
+              Concern
+            </option>
             <option>Dry Skin</option>
             <option>Pigmentation</option>
             <option>Oil Control</option>
@@ -23,6 +42,7 @@ const ProductList = () => {
             <option>Frizzy Hair</option>
             <option>Stretch Marks</option>
             <option>Color Protection</option>
+            <option>Dry Hair</option>
             <option>Soothing</option>
             <option>Dandruff</option>
             <option>Greying</option>
@@ -33,25 +53,49 @@ const ProductList = () => {
             <option>Hair Growth</option>
           </select>
 
-          <select name="brand" id="" className="p-2 mb-4 sm:mb-0 sm:mr-4">
+          <select
+            name="brand"
+            className="p-2 mb-4 sm:mb-0 sm:mr-4"
+            onChange={handleFilters}
+            defaultValue=""
+          >
+            <option disabled value="">
+              Popular Brands
+            </option>
             <option>Garnier</option>
             <option>Kylie</option>
             <option>Kiss Beauty</option>
             <option>Dr Rashel</option>
             <option>Luron</option>
+            <option>Nivea</option>
             <option>Heaven Dove</option>
             <option>Disaar</option>
             <option>Johnsons Baby</option>
             <option>Rexona</option>
             <option>Kylie</option>
           </select>
+
+          <select
+  name="skintype"
+  className="p-2 mb-4 sm:mb-0"
+  onChange={handleFilters}
+  defaultValue=""
+>
+  <option disabled value="">
+    Skin type
+  </option>
+  <option>All</option>
+  <option>Oily</option>
+  <option>Dry</option>
+  <option>Sensitive</option>
+  <option>Normal</option>
+</select>
+
         </div>
 
-        {/* Right */}
-
         <div className="flex flex-col sm:flex-row sm:items-center">
-          <span className="text-lg font-semibold mr-4">Sort Products</span>
-          <select name="price" id="">
+          <span className="text-lg font-semibold mr-4">Sort Products:</span>
+          <select className="p-2" onChange={(e) => setSort(e.target.value)}>
             <option value="newest">Newest</option>
             <option value="asc">Price (asc)</option>
             <option value="desc">Price (desc)</option>
@@ -59,8 +103,7 @@ const ProductList = () => {
         </div>
       </div>
 
-      <Products />
-      <Products />
+      <Products query={query} filters={filters} sort={sort} />
     </div>
   );
 };

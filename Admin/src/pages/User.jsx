@@ -1,9 +1,24 @@
-import React from 'react'
 import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
- import { FaTrash } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaTrash } from "react-icons/fa";
+import { userRequest } from "./requestMethods.js";
 
-const User = () => {
+const Users = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+
+    try {
+      await userRequest.delete(`/users/${id}`);
+      setUsers(users.filter((user) => user._id !== id));
+    } catch (err) {
+      alert("Failed to delete user. Please try again.");
+      console.error(err);
+    }
+  };
 
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
@@ -15,92 +30,65 @@ const User = () => {
       field: "delete",
       headerName: "Delete",
       width: 150,
-      renderCell: () => {
-       
-          return <FaTrash className="text-red-500 cursor-pointer m-2" />;
-     
-      
-      },
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <FaTrash
+          className="text-red-500 cursor-pointer hover:text-red-700 transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(params.row._id);
+          }}
+        />
+      ),
     },
   ];
-  const data = [
-    {
-      _id: "u001",
-      name: "Alice Johnson",
-      email: "alice@example.com",
-      phone: "123-456-7890",
-      role: "Admin",
-    },
-    {
-      _id: "u002",
-      name: "Bob Smith",
-      email: "bob@example.com",
-      phone: "234-567-8901",
-      role: "User",
-    },
-    {
-      _id: "u003",
-      name: "Charlie Brown",
-      email: "charlie@example.com",
-      phone: "345-678-9012",
-      role: "User",
-    },
-    {
-      _id: "u004",
-      name: "David Clark",
-      email: "david@example.com",
-      phone: "456-789-0123",
-      role: "Admin",
-    },
-    {
-      _id: "u005",
-      name: "Eve Stone",
-      email: "eve@example.com",
-      phone: "567-890-1234",
-      role: "User",
-    },
-    {
-      _id: "u006",
-      name: "Frank Wilson",
-      email: "frank@example.com",
-      phone: "678-901-2345",
-      role: "Admin",
-    },
-    {
-      _id: "u007",
-      name: "Grace Lee",
-      email: "grace@example.com",
-      phone: "789-012-3456",
-      role: "User",
-    },
-    {
-      _id: "u008",
-      name: "Henry Kim",
-      email: "henry@example.com",
-      phone: "890-123-4567",
-      role: "Admin",
-    },
-  ];
-  return (
-    <div className="p-5 w-[70vw]">
-          <div className="flex justify-between items-center m-[30px]">
-            <h2 className="m-[20px] text-[20px] ">All Users</h2>
-    
-            <button className="bg-[#1e1e1e] p-[10px] font-semibold text-white cursor-pointer">
-              Create
-            </button>
-          </div>
-          <div className="">
-            <DataGrid
-              getRowId={(row) => row._id}
-              rows={data}
-              columns={columns}
-              checkboxSelection
-              autoHeight
-            />
-          </div>
-        </div>
-  )
-}
 
-export default User
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        setLoading(true);
+        const res = await userRequest.get("/users");
+        setUsers(res.data);
+        setError(null);
+      } catch (err) {
+        setError("Failed to load users");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getUsers();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="w-[70vw] p-8">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-[70vw]">
+      <div className="flex items-center justify-between m-[5px]">
+        <h1 className="m-[20px] text-[20px]">All Users</h1>
+      </div>
+
+      <div className="m-[30px]">
+        <DataGrid
+          rows={users}
+          columns={columns}
+          getRowId={(row) => row._id}
+          loading={loading}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Users;
