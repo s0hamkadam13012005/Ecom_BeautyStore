@@ -1,20 +1,38 @@
-import express from 'express';
-import{ createProduct,updateProduct,deleteProduct,getProduct,getAllProducts,  ratingProduct} 
-from '../controller/product.controller.js'
-
+import express from "express";
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProduct,
+  getAllProducts,
+  ratingProduct,
+} from "../controller/product.controller.js";
 
 const router = express.Router();
 
-router.get("/:id",getProduct)
+// IMPORTANT: Specific routes MUST come BEFORE generic routes
+// Test route - specific
+router.post("/test", (req, res) => {
+  console.log("✅ Test route hit!");
+  res.json({ message: "Test route works!" });
+});
 
-router.get("/",getAllProducts)
+// Rating route - specific (must be before /:id)
+router.put("/rating/:productId", ratingProduct);
 
-router.post("/",createProduct)
+// Get all products - must be before /:id
+router.get("/", getAllProducts);
 
-router.put("rating/:productId",ratingProduct)
+// Create product
+router.post("/", createProduct);
 
-router.put("/:id",updateProduct);
+// Get single product by ID
+router.get("/:id", getProduct);
 
-router.delete("/:id",deleteProduct);
+// Update product by ID
+router.put("/:id", updateProduct);
 
-export default router; 
+// Delete product by ID
+router.delete("/:id", deleteProduct);
+
+export default router;

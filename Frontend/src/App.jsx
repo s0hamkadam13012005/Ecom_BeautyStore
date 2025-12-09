@@ -60,6 +60,7 @@ const App = () => {
           path: "/myorders",
           element: <Order />,
         },
+        { path: "/product/:id", element: <Product /> },
       ],
     },
   ]);

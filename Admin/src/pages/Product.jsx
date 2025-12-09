@@ -1,6 +1,40 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 import { FaUpload } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { userRequest } from "./requestMethods";
 const Product = () => {
+  const [product, setProduct] = useState({});
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await userRequest.get("/products/" + id);
+        setProduct(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [id]);
+
+  const [inputs, setInputs] = useState(product);
+
+  const handleUpdate = async () => {
+    try {
+      await userRequest.put(`/products/${id}`, { ...inputs });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
   return (
     <div className="p-5 w-[70vw]">
       {/* FIRST PART */}
@@ -34,7 +68,7 @@ const Product = () => {
         <div className="flex-1 bg-white p-5 shadow-lg rounded-lg">
           <div className="flex items-center mb-5">
             <img
-              src="https://images.pexels.com/photos/8101532/pexels-photo-8101532.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src={product.img}
               alt=""
               className="h-20 w-20 rounded-full mr-5"
             />
@@ -46,12 +80,12 @@ const Product = () => {
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="font-semibold">ID:</span>
-              <span>9321977568</span>
+              <span>{product._id}</span>
             </div>
 
             <div className="flex justify-between">
               <span className="font-semibold">Sales:</span>
-              <span>932</span>
+              <span>{product._id}</span>
             </div>
 
             <div className="flex justify-between">
@@ -75,6 +109,9 @@ const Product = () => {
               </label>
               <input
                 type="text"
+                name="title"
+                placeholder={product.title}
+                onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
@@ -86,6 +123,9 @@ const Product = () => {
               </label>
               <input
                 type="text"
+                name="desc"
+                placeholder={product.desc}
+                onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
@@ -97,6 +137,9 @@ const Product = () => {
               </label>
               <input
                 type="number"
+                name="originalPrice"
+                placeholder={product.originalPrice}
+                onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
@@ -108,6 +151,8 @@ const Product = () => {
               </label>
               <input
                 type="number"
+                name="discountedPrice"
+                placeholder={product.discountedPrice}
                 className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
@@ -132,18 +177,22 @@ const Product = () => {
 
           <div className="flex-1 flex flex-col items center space-y-5">
             <div className="flex flex-col items-center">
-             
               <img
-                src="https://images.pexels.com/photos/8101532/pexels-photo-8101532.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src={product.img}
                 alt=""
                 className="h-40 w-40 rounded-full mr-5"
-                          />
-                          
-                          <label htmlFor="" className="cursor-pointer mt-5">
-                              <FaUpload className="text-2xl text-gray-700"/>
-                          </label>
+              />
 
-                          <button className="bg-slate-500 text-white py-2 px-4 rounded mt-5">Update</button>
+              <label htmlFor="" className="cursor-pointer mt-5">
+                <FaUpload className="text-2xl text-gray-700" />
+              </label>
+
+              <button
+                className="bg-slate-500 text-white py-2 px-4 rounded mt-5"
+                onClick={handleUpdate}
+              >
+                Update
+              </button>
             </div>
           </div>
         </form>

@@ -1,82 +1,35 @@
-import React from "react";
+
+import { useEffect, useState } from "react";  // ← Add useState
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
+import { userRequest } from "./requestMethods";
+import Product from "./Product"; 
+
+
 const Products = () => {
-  const data = [
-    {
-      _id: "101",
-      title: "Moisturizing Cream",
-      img: "https://images.pexels.com/photos/8054395/pexels-photo-8054395.jpeg",
-      desc: "Hydrating cream for dry skin.",
-      originalPrice: 25.99,
-      discountedPrice: 19.99,
-      inStock: true,
-    },
-    {
-      _id: "102",
-      title: "Revitalizing Serum",
-      img: "https://images.pexels.com/photos/3755657/pexels-photo-3755657.jpeg",
-      desc: "Brightening serum for radiant skin.",
-      originalPrice: 45.99,
-      discountedPrice: 39.99,
-      inStock: false,
-    },
-    {
-      _id: "103",
-      title: "Exfoliating Scrub",
-      img: "https://images.pexels.com/photos/2730153/pexels-photo-2730153.jpeg",
-      desc: "Gentle scrub for smooth skin.",
-      originalPrice: 20.0,
-      discountedPrice: 15.99,
-      inStock: true,
-    },
-    {
-      _id: "104",
-      title: "Anti-Aging Cream",
-      img: "https://images.pexels.com/photos/2496219/pexels-photo-2496219.jpeg",
-      desc: "Cream to reduce signs of aging.",
-      originalPrice: 55.0,
-      discountedPrice: 49.99,
-      inStock: true,
-    },
-    {
-      _id: "105",
-      title: "Cleansing Gel",
-      img: "https://images.pexels.com/photos/6782462/pexels-photo-6782462.jpeg",
-      desc: "Gel to cleanse and refresh skin.",
-      originalPrice: 18.0,
-      discountedPrice: 15.5,
-      inStock: false,
-    },
-    {
-      _id: "106",
-      title: "Sun Protection Lotion",
-      img: "https://images.pexels.com/photos/416717/pexels-photo-416717.jpeg",
-      desc: "SPF 50 sun protection lotion.",
-      originalPrice: 22.99,
-      discountedPrice: 19.99,
-      inStock: true,
-    },
-    {
-      _id: "107",
-      title: "Hydrating Face Mask",
-      img: "https://images.pexels.com/photos/337373/pexels-photo-337373.jpeg",
-      desc: "Hydration face mask for deep moisture.",
-      originalPrice: 30.0,
-      discountedPrice: 25.0,
-      inStock: true,
-    },
-    {
-      _id: "108",
-      title: "Vitamin C Serum",
-      img: "https://images.pexels.com/photos/4792671/pexels-photo-4792671.jpeg",
-      desc: "Serum with Vitamin C for skin brightening.",
-      originalPrice: 50.0,
-      discountedPrice: 45.0,
-      inStock: true,
-    },
-  ];
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    
+    const getProducts = async () => {
+      
+      try {
+        const res = await userRequest.get("products");
+        setProducts(res.data)
+      }
+      catch(error) {
+        console.log(error)
+      }
+    }
+
+      getProducts();
+  },
+    [])
+
+
+ 
 
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
@@ -138,14 +91,16 @@ const Products = () => {
       <div className="flex justify-between items-center m-[30px]">
         <h2 className="m-[20px] text-[20px] ">All Products</h2>
 
-        <button className="bg-[#1e1e1e] p-[10px] font-semibold text-white cursor-pointer">
-          Create
-        </button>
+        <Link to={"/newproduct"}>
+          <button className="bg-[#1e1e1e] p-[10px] font-semibold text-white cursor-pointer">
+            Create
+          </button>
+        </Link>
       </div>
       <div className="">
         <DataGrid
           getRowId={(row) => row._id}
-          rows={data}
+          rows={products}
           columns={columns}
           checkboxSelection
           autoHeight

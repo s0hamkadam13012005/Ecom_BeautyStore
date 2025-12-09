@@ -39,7 +39,7 @@ const App = () => {
           element: <Products />,
         },
         {
-          path: "/users",
+          path: "users",
           element: <User />,
         },
         {
@@ -52,11 +52,11 @@ const App = () => {
           element: <Banners />,
         },
         {
-          path: "/newproduct",
+          path: "newproduct",
           element: <NewProduct />,
         },
         {
-          path: "/product/:id",
+          path: "product/:id",
           element: <Product />,
         },
       ],
