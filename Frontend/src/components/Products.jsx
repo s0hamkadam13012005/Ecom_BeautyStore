@@ -7,9 +7,7 @@ import PropTypes from "prop-types";
 const Products = ({ filters, sort, query }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-console.log(products);
 
-  console.log(products)
   useEffect(() => {
     const getProducts = async () => {
       try {
