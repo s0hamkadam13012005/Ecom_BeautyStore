@@ -76,21 +76,20 @@ const ProductList = () => {
           </select>
 
           <select
-  name="skintype"
-  className="p-2 mb-4 sm:mb-0"
-  onChange={handleFilters}
-  defaultValue=""
->
-  <option disabled value="">
-    Skin type
-  </option>
-  <option>All</option>
-  <option>Oily</option>
-  <option>Dry</option>
-  <option>Sensitive</option>
-  <option>Normal</option>
-</select>
-
+            name="skintype"
+            className="p-2 mb-4 sm:mb-0"
+            onChange={handleFilters}
+            defaultValue=""
+          >
+            <option disabled value="">
+              Skin type
+            </option>
+            <option>All</option>
+            <option>Oily</option>
+            <option>Dry</option>
+            <option>Sensitive</option>
+            <option>Normal</option>
+          </select>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center">

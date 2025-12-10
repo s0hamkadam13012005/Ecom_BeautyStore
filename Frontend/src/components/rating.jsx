@@ -1,5 +1,6 @@
 import StarRatings from "react-star-ratings";
 export const showAverage = (p) => {
+  
   if (p && p.ratings) {
     let ratingsArray = p && p.ratings;
 
@@ -10,6 +11,10 @@ export const showAverage = (p) => {
     let totalReduced = total.reduce((p, n) => p + n, 0);
     let highest = length * 5;
     let result = (totalReduced * 5) / highest;
+
+
+      console.log("RESULT:", result);
+      console.log("RATINGS:", ratingsArray);
     return (
       <div
         style={{
@@ -20,11 +25,12 @@ export const showAverage = (p) => {
         }}
       >
         <span>
-          <StarRating
+          <StarRatings
             starSpacing="2px"
             starRatedColor="#d1411e"
             starDimension="18px"
             rating={result}
+            numberOfStars={5}
             editing={false}
           />
           ({length})

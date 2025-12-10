@@ -18,6 +18,7 @@ const Product = () => {
 
   let price;
 
+  console.log(product.ratings);
   const handleQuantity = (action) => {
     if (action === "dec") {
       setQuantity(quantity === 1 ? 1 : quantity - 1);
@@ -131,7 +132,7 @@ const Product = () => {
           </h2>
           <hr className="mb-4" />
           <span className="block text-gray-600 text-base">
-            1 Garnier Even & Matte Vitamin C Cleansing Foam 500ml
+           {product.title}
           </span>
         </div>
 

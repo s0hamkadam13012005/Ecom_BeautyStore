@@ -1,5 +1,10 @@
 import express from 'express';
-import {createBanner,deleteBanner,getAllBanners,getRandomBanner}  from '../controller/banner.controller';
+import {
+  createBanner,
+  deleteBanner,
+  getAllBanners,
+  getRandomBanner,
+} from "../controller/banner.controller.js";
 const router = express.Router();
 
 router.get("/random",getRandomBanner);
